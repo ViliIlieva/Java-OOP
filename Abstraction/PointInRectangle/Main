@@ -1,0 +1,25 @@
+package PointInRectangle;
+
+import input.Reader;
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int[] rectanglePoints = Reader.readIntArray("\\s+");
+        Point A = new Point(rectanglePoints[0], rectanglePoints[1]);
+        Point B = new Point(rectanglePoints[2], rectanglePoints[3]);
+
+        Rectangle rec = new Rectangle(A, B);
+        int count = Reader.readIntArray(" ")[0];
+        while (count-- > 0){
+            int [] singlePoint = Reader.readIntArray(" ");
+            Point p = new Point(singlePoint[0], singlePoint[1]);
+
+            boolean isWithin = rec.contains(p);
+            System.out.println(isWithin);
+        }
+    }
+}
