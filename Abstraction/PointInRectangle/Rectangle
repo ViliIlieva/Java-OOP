@@ -1,0 +1,14 @@
+package PointInRectangle;
+
+public class Rectangle {
+        private Point A;
+        private Point B;
+
+    public Rectangle(Point A, Point B) {
+        this.A = A;
+        this.B = B;
+    }
+    public boolean contains (Point P){
+        return P.greaterOrEqual(A) && P.lessOrEqual(B);
+    }
+}
