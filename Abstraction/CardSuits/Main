@@ -1,0 +1,20 @@
+package CardSuits;
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        //System.out.println("Card Ranks:");
+        //for (Card card : Card.values()) {
+        //    System.out.printf("Ordinal value: %d; Name value: %s%n", card.ordinal(), card.name());
+        //}
+
+        CardRank rank = CardRank.valueOf(scanner.nextLine());
+        CardSuit suit = CardSuit.valueOf(scanner.nextLine());
+        Card card = new Card(suit, rank);
+
+        System.out.printf("Card name: %s of %s; Card power: %d", rank, suit, card.getPower());
+
+    }
+}
