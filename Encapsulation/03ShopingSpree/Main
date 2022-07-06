@@ -1,0 +1,61 @@
+package ShopingSpree;
+
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        Map<String, Person> people = new LinkedHashMap<>();
+        Map<String, Product> products = new HashMap<>();
+
+        String[] input = scanner.nextLine().split(";");
+
+        for (int i = 0; i < input.length; i++) {
+            String[] personPart = input[i].split("=");
+            String name = personPart[0];
+            double money = Double.parseDouble(personPart[1]);
+            try {
+                Person person = new Person(name, money);
+                people.put(name, person);
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+                return;
+            }
+        }
+        input = scanner.nextLine().split(";");
+        for (int i = 0; i < input.length; i++) {
+            String[] productPart = input[i].split("=");
+            String name = productPart[0];
+            double cost = Double.parseDouble(productPart[1]);
+            try {
+                Product product1 = new Product(name, cost);
+                products.put(name, product1);
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+                return;
+            }
+        }
+
+        String command = scanner.nextLine();
+        while (!"END".equals(command)) {
+            input = command.split(" ");
+            String personName = input[0];
+            String productName = input[1];
+
+            Person buyer = people.get(personName);
+            Product productToBuy = products.get(productName);
+            try {
+                buyer.buyProduct(productToBuy);
+                System.out.printf("%s bought %s%n", personName, productName);
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+            command = scanner.nextLine();
+        }
+        people.values().forEach(System.out::println);
+    }
+}
