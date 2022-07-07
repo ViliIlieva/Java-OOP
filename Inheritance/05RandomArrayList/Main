@@ -1,0 +1,16 @@
+package RandomArrayList;
+
+import java.util.Random;
+
+public class Main {
+    public static void main(String[] args) {
+
+        RandomArrayList list = new RandomArrayList();
+        list.add(13);
+        list.add(42);
+        list.add(79);
+        list.add(64);
+        list.add(52);
+        System.out.println(list.getRandomElement());
+    }
+}
