@@ -1,0 +1,34 @@
+package BorderControl;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        List<Identifiable> list = new ArrayList<>();
+
+        String input = scanner.nextLine();
+
+        while (!input.equals("End")){
+            String [] inputArr = input.split(" ");
+
+            Identifiable identifiable = inputArr.length == 2
+                    ? new Robot(inputArr[1], inputArr[0])
+                    : new Citizen(inputArr[0], Integer.parseInt(inputArr[1]), inputArr[2]);
+
+            list.add(identifiable);
+
+            input = scanner.nextLine();
+        }
+        String fakeIdAnd = scanner.nextLine();
+
+        list.stream()
+                .map(Identifiable::getId)
+                .filter(i -> i.endsWith(fakeIdAnd))
+                .forEach(System.out::println);
+
+    }
+}
