@@ -1,0 +1,38 @@
+package FoodShortage;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        Map<String, Buyer> people = new HashMap<>();
+
+        int n = Integer.parseInt(scanner.nextLine());
+        for (int i = 0; i < n; i++) {
+            String[] input = scanner.nextLine().split(" ");
+            Buyer buyer;
+            String name = input[0];
+            if (input.length == 4) {
+                buyer = new Citizen(name);
+            } else {
+                buyer = new Rebel(name);
+            }
+            people.put(name, buyer);
+        }
+        String buyerName = scanner.nextLine();
+
+        while (!buyerName.equals("End")){
+
+            if(people.containsKey(buyerName)){
+                Buyer buyer = people.get(buyerName);
+                buyer.buyFood();
+            }
+            buyerName = scanner.nextLine();
+        }
+        int totalFood = people.values().stream().mapToInt(Buyer::getFood).sum();
+        System.out.println(totalFood);
+    }
+}
