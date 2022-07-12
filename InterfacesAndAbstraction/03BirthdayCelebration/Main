@@ -1,0 +1,44 @@
+package BirthdayCelebration;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        String input = scanner.nextLine();
+       List<Birthable> list = new ArrayList<>();
+
+        while (!"End".equals(input)){
+            String [] inputArr = input.split(" ");
+            String name;
+            String birthDate;
+            switch (inputArr[0]){
+                case "Citizen":
+                    name = inputArr[1];
+                    int age = Integer.parseInt(inputArr[2]);
+                    String id = inputArr[3];
+                    birthDate = inputArr[4];
+                    Birthable citizen = new Citizen(name, age, id, birthDate);
+                    list.add(citizen);
+                    break;
+                case "Pet":
+                    name = inputArr[1];
+                    birthDate = inputArr[2];
+                    Birthable pet = new Pet(name, birthDate);
+                    list.add(pet);
+                    break;
+                case "Robot":
+                    break;
+            }
+            input = scanner.nextLine();
+        }
+        String date = scanner.nextLine();
+        for (Birthable birthable : list) {
+            if(birthable.getBirthDate().endsWith(date)){
+                System.out.println(birthable.getBirthDate());
+            }
+        }
+    }
+}
