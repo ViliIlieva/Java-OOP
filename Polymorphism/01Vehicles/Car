@@ -1,0 +1,20 @@
+package Vehicles;
+
+public class Car extends AbstractVehicle{
+    private static double SUMMER_CONSUMPTION = 0.9;
+
+    public Car(double fuelQuantity, double fuelConsumption) {
+        super(fuelQuantity, fuelConsumption + SUMMER_CONSUMPTION);
+    }
+
+    @Override
+    public String drive(double km) {
+        return "Car " + super.drive(km);
+    }
+
+    @Override
+    public void printFuelQuantity() {
+        System.out.print("Car");
+        super.printFuelQuantity();
+    }
+}
