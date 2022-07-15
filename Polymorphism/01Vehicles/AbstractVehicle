@@ -1,0 +1,61 @@
+package Vehicles;
+
+import java.text.DecimalFormat;
+
+public abstract class  AbstractVehicle implements Vehicles{
+    private double fuelQuantity;
+    private double fuelConsumption;
+    private double tankCapacity;
+
+    private DecimalFormat df = new DecimalFormat("#.##");
+
+
+    public AbstractVehicle(double fuelQuantity, double fuelConsumption) {
+        this.fuelQuantity = fuelQuantity;
+        this.fuelConsumption = fuelConsumption;
+    }
+
+    protected boolean hasEnoughFuel(double kilometers) {
+        double totalFuelCost = kilometers * getFuelConsumption();
+        return totalFuelCost < getFuelQuantity();
+    }
+
+    protected void consumeFuel(double kilometers) {
+        fuelQuantity -= kilometers * fuelConsumption;
+    }
+
+    @Override
+    public void printFuelQuantity() {
+        System.out.println(": " + String.format("%.2f", fuelQuantity));
+    }
+
+    @Override
+    public String drive(double km){
+        if(!hasEnoughFuel(km)){
+            return "needs refueling";
+        }
+        consumeFuel(km);
+        return "travelled " + df.format(km) + " km";
+    }
+
+    @Override
+    public void refuel(double liters) {
+            fuelQuantity += liters;
+    }
+
+    public double getFuelQuantity() {
+        return fuelQuantity;
+    }
+
+    public void setFuelQuantity(double fuelQuantity) {
+        this.fuelQuantity = fuelQuantity;
+    }
+
+    public double getFuelConsumption() {
+        return fuelConsumption;
+    }
+
+    public void setFuelConsumption(double fuelConsumption) {
+        this.fuelConsumption = fuelConsumption;
+    }
+}
