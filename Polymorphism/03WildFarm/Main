@@ -1,0 +1,53 @@
+package WildFarm;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        List <Animal> animals = new ArrayList<>();
+        List <Food> foods = new ArrayList<>();
+
+        String input = scanner.nextLine();
+
+        while (!input.equals("End")){
+            String [] animalInfo = input.split(" ");
+            if("Cat".equals(animalInfo[0])) {
+                Animal cat = new Cat(animalInfo[1], Double.parseDouble(animalInfo[2]), animalInfo[3], animalInfo[4]);
+                animals.add(cat);
+            } else if("Mouse".equals(animalInfo[0])) {
+                Animal mouse = new Mouse(animalInfo[1], Double.parseDouble(animalInfo[2]), animalInfo[3]);
+                animals.add(mouse);
+            } else if("Tiger".equals(animalInfo[0])) {
+                Animal tiger = new Tiger(animalInfo[1], Double.parseDouble(animalInfo[2]), animalInfo[3]);
+                animals.add(tiger);
+            } else if("Zebra".equals(animalInfo[0])) {
+                Animal zebra = new Zebra(animalInfo[1], Double.parseDouble(animalInfo[2]), animalInfo[3]);
+                animals.add(zebra);
+            }
+            String [] foodInfo = scanner.nextLine().split(" ");
+            if("Vegetable".equals(foodInfo[0])){
+                Food vegetable = new Vegetable(Integer.parseInt(foodInfo[1]));
+                foods.add(vegetable);
+            } else if ("Meat".equals(foodInfo[0])) {
+                Food meat = new Meat(Integer.parseInt(foodInfo[1]));
+                foods.add(meat);
+            }
+            input = scanner.nextLine();
+        }
+
+        for (int i = 0; i < animals.size(); i++) {
+            Animal animal = animals.get(i);
+            Food food = foods.get(i);
+
+            animal.makeSound();
+            animal.eat(food);
+        }
+        for (int i = 0; i < animals.size(); i++) {
+            System.out.println(animals.get(i));
+        }
+    }
+}
