@@ -1,0 +1,83 @@
+package heroRepository;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.List;
+
+public class HeroRepositoryTests {
+    private HeroRepository heroRepository;
+    private Hero hero;
+
+    @Before
+    public void setUp(){
+        heroRepository = new HeroRepository();
+        hero = new Hero("Desi", 2);
+    }
+    //проверяваме конструктора
+    //ako му подадем null
+
+    //тестваме метода create
+    //нашия гетой да е null
+    @Test(expected = NullPointerException.class)
+    public void test_CreateHeroNull (){
+         this.heroRepository.create(null);
+    }
+
+    //имаме дублиращо се име
+    @Test(expected = IllegalArgumentException.class)
+    public void test_CreateHeroWithDuplicateName (){
+        this.heroRepository.create(this.hero);
+        this.heroRepository.create(this.hero);
+    }
+
+    //успешно създаваме герой
+    @Test
+    public void test_CreateHero (){
+        //проверява дали е празно
+        Assert.assertEquals(0, this.heroRepository.getCount());
+        this.heroRepository.create(this.hero);
+        //проверявам дали имам един герой създаден
+        Assert.assertEquals(1, this.heroRepository.getCount());
+        //проверяваме дали създадения герой е точно този който му подавам
+        Hero createdHero = this.heroRepository.getHero("Desi");
+        Assert.assertEquals(createdHero.getName(), this.hero.getName());
+        Assert.assertEquals(createdHero.getLevel(), this.hero.getLevel());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void test_RemoveHeroWithNullName () {
+    this.heroRepository.remove(null);
+    }
+    @Test(expected = NullPointerException.class)
+    public void test_RemoveHeroWithEmptyName () {
+        this.heroRepository.remove("");
+    }
+    @Test
+    public void test_RemoveName () {
+        Assert.assertEquals(0, this.heroRepository.getCount());
+        this.heroRepository.create(hero);
+        Assert.assertEquals(1, this.heroRepository.getCount());
+        this.heroRepository.remove("Desi");
+        Assert.assertEquals(0, this.heroRepository.getCount());
+        Hero removeHero = this.heroRepository.getHero("Desi");//трябва да дава null
+        Assert.assertNull(removeHero);
+    }
+
+
+    @Test
+    public void test_getHeroWithHighestLevel(){
+        Hero hero1 = new Hero("Zdravko", 3);
+        Hero hero2 = new Hero("Valeri", 6);
+        Hero hero3 = new Hero("Ivo", 4);
+        this.heroRepository.create(hero1);
+        this.heroRepository.create(hero2);
+        this.heroRepository.create(hero3);
+        Assert.assertEquals(3, this.heroRepository.getHeroes().size());
+        Hero highestHero = this.heroRepository.getHeroWithHighestLevel();
+        Assert.assertEquals(highestHero.getName(), hero2.getName());
+        Assert.assertEquals(highestHero.getLevel(), hero2.getLevel());
+    }
+
+}
