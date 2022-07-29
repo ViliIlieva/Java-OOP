@@ -1,0 +1,56 @@
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import p03_IteratorTest.ListIterator;
+
+import javax.naming.OperationNotSupportedException;
+
+public class ListIteratorTest {
+    private ListIterator listIterator;
+    private static final String[] DATA = {"Desi", "Ivo", "Stoyan", "Iliyan", "Vladislav"};
+
+    @Before
+    public void setUp() throws OperationNotSupportedException {
+        listIterator = new ListIterator(DATA);
+    }
+
+    //конструктора
+    //1. ако му подавам null
+    @Test(expected = OperationNotSupportedException.class)
+    public void test_ConstructorWithNullParameter() throws OperationNotSupportedException {
+        new ListIterator(null);
+    }
+
+    //метода hasNext + метод move
+    @Test
+    public void test_HasNext (){
+        Assert.assertTrue(listIterator.hasNext());//проверява 0 индекс
+        listIterator.move();
+        Assert.assertTrue(listIterator.hasNext());//проверява 1 индекс
+        listIterator.move();
+        Assert.assertTrue(listIterator.hasNext());//проверява 2 индекс
+        listIterator.move();
+        Assert.assertTrue(listIterator.hasNext());//проверява 3 индекс
+        listIterator.move();
+        Assert.assertFalse(listIterator.hasNext());
+        Assert.assertFalse(listIterator.move());
+    }
+
+    //print
+    //ако няма елементи
+    @Test(expected = IllegalStateException.class)
+    public void test_PrintEmptyList() throws OperationNotSupportedException {
+        ListIterator listIterator = new ListIterator();
+        listIterator.print();
+    }
+    //дали принтира всички елементи
+    @Test
+    public void test_printCorrect(){
+        int index = 0;
+        while (listIterator.hasNext()){
+            Assert.assertEquals(listIterator.print(), DATA[index]);
+            index++;
+            listIterator.move();
+        }
+    }
+}
