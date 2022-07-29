@@ -1,0 +1,38 @@
+import org.junit.Assert;
+import org.junit.Test;
+import org.mockito.Mockito;
+import p06_TirePressureMonitoringSystem.Alarm;
+import p06_TirePressureMonitoringSystem.Sensor;
+
+public class TirePressureMonitoringSystemTest {
+    //налягането е под минимума < 17 - true
+    @Test
+    public void test_AlarmWithLowerValue(){
+        //винаги налягането да е < 17
+        Sensor sensor = Mockito.mock(Sensor.class);
+        Mockito.when(sensor.popNextPressurePsiValue()).thenReturn(16.9);
+        Alarm alarm = new Alarm(sensor);
+        alarm.check();
+        Assert.assertTrue(alarm.getAlarmOn());
+    }
+    //налягането е над максимума > 21 - true
+    @Test
+    public void test_AlarmWithHighValue(){
+        //винаги налягането да е > 21
+        Sensor sensor = Mockito.mock(Sensor.class);
+        Mockito.when(sensor.popNextPressurePsiValue()).thenReturn(21.1);
+        Alarm alarm = new Alarm(sensor);
+        alarm.check();
+        Assert.assertTrue(alarm.getAlarmOn());
+    }
+
+    //налягането е в норма (между 17 и 21) - false
+    @Test
+    public void test_AlarmWithNormalValue(){
+        Sensor sensor = Mockito.mock(Sensor.class);
+        Mockito.when(sensor.popNextPressurePsiValue()).thenReturn(19.6);
+        Alarm alarm = new Alarm(sensor);
+        alarm.check();
+        Assert.assertFalse(alarm.getAlarmOn());
+    }
+}
