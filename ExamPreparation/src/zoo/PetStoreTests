@@ -1,0 +1,57 @@
+public class PetStoreTests {
+    private Animal animal;
+    private Animal animal1;
+    private Animal animal2;
+    private PetStore petStore;
+
+
+    @Before
+    public void setUp() {
+        petStore = new PetStore();
+        animal = new Animal("Dog", 12, 100.20);
+        animal1 = new Animal("Cat", 5, 50.10);
+        animal2 = new Animal("Dog", 10, 70.90);
+
+        petStore = new PetStore();
+        petStore.addAnimal(animal);
+        petStore.addAnimal(animal1);
+        petStore.addAnimal(animal2);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testAdd_ThrowIfNull (){
+        petStore.addAnimal(null);
+    }
+    @Test
+    public void testGetCount () {
+        Assert.assertEquals(3, petStore.getCount());
+    }
+    @Test
+    public void testGetTheMostExpensiveAnimal (){
+        Animal animalMostExpensive = petStore.getTheMostExpensiveAnimal();
+        Assert.assertEquals(animal.getSpecie(), animalMostExpensive.getSpecie());
+        Assert.assertSame(animal, animalMostExpensive);
+    }
+    @Test
+    public void testFindAllAnimalsWithMaxKilograms(){
+        List<Animal> expected = new ArrayList<>();
+        expected.add(animal);
+        expected.add(animal2);
+
+        List <Animal> animalsMaxKg = petStore.findAllAnimalsWithMaxKilograms(9);
+        Assert.assertEquals(expected, animalsMaxKg);
+        Assert.assertEquals(2, this.petStore.findAllAnimalsWithMaxKilograms(9).size());
+    }
+    @Test
+    public void testFindAllAnimalBySpecie(){
+        List <Animal> animalsBySpecies = petStore.findAllAnimalBySpecie("Dog");
+        Assert.assertEquals(2, this.petStore.findAllAnimalBySpecie("Dog").size());
+    }
+    @Test
+    public void testGetAnimals (){
+        List<Animal> animalList = petStore.getAnimals();
+        Assert.assertSame(animal, animalList.get(0));
+        Assert.assertSame(animal1, animalList.get(1));
+        Assert.assertSame(animal2, animalList.get(2));
+    }
+}
