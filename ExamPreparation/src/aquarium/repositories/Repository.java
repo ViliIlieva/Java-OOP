@@ -8,4 +8,5 @@ public interface Repository  {
     boolean remove(Decoration decoration);
 
     Decoration findByType(String type);
+    
 }
