@@ -27,4 +27,5 @@ public class DecorationRepository implements Repository {
         return decorations.stream().filter(d -> d.getClass().getSimpleName().equals(type))
                 .findFirst().orElse(null);
     }
+    
 }
