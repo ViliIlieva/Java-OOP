@@ -1,5 +1,4 @@
 package aquarium.common;
-
 public enum Command {
     AddAquarium,
     AddDecoration,
