@@ -75,7 +75,7 @@ public abstract class BaseAquarium implements Aquarium {
     public String getInfo() {
         String fishOutput = fish.isEmpty()
                 ? "none"
-                : fish.stream().map(Fish::getName).collect(Collectors.joining(", "));
+                : fish.stream().map(Fish::getName).collect(Collectors.joining(" "));
         return String.format("%s (%s):%n" +
                         "Fish: %s%n" +
                         "Decorations: %d%n" +
