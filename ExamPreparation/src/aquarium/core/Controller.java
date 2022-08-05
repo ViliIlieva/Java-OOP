@@ -1,7 +1,6 @@
 package aquarium.core;
 
 public interface Controller {
-
     String addAquarium(String aquariumType, String aquariumName);
     String addDecoration(String type);
     String insertDecoration(String aquariumName, String decorationType);
