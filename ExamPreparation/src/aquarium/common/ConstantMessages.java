@@ -1,5 +1,6 @@
 package aquarium.common;
 
+
 public class ConstantMessages {
     public static final String NOT_ENOUGH_CAPACITY = "Not enough capacity.";
     public static final String WATER_NOT_SUITABLE = "Water not suitable.";
