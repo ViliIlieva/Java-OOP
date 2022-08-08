@@ -1,0 +1,81 @@
+package cats;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+public class HouseTests {
+    private Cat cat = new Cat("Puf");
+    private Cat cat1 = new Cat("Kity");
+    private Cat cat2 = new Cat("Roni");
+    private House house;
+
+    @Before
+    public void setUp (){
+        house = new House("Vili", 3);
+        house.addCat(cat);
+        house.addCat(cat1);
+        house.addCat(cat2);
+    }
+
+    @Test
+    public void test_GetName(){
+        Assert.assertEquals("Vili", house.getName());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void test_SetNameThrowIfNull(){
+        house = new House(null, 1);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void test_SetNameThrowIfIsEmpty(){
+        house = new House("", 1);
+    }
+
+
+    @Test
+    public void test_GetCapacity(){
+        Assert.assertEquals(3, house.getCapacity());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_SetCapacityThrowIfNegative(){
+        house = new House("Vili", -1);
+    }
+
+    @Test
+    public void test_GetCount (){
+        Assert.assertEquals(3, house.getCount());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_AddCatThrowIfIsFull(){
+        house.addCat(cat);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_RemoveCatThrowIfNameIsWrong(){
+        house.removeCat("Pepi");
+    }
+
+    @Test
+    public void test_RemoveCat(){
+        house.removeCat("Puf");
+        Assert.assertEquals(2, house.getCount());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_CatForSaleThrowIfNameIsWrong(){
+        house.catForSale("Pepi");
+    }
+
+    @Test
+    public void test_CatForSale(){
+        Cat testCat = house.catForSale("Puf");
+        Assert.assertSame(cat, testCat);
+        Assert.assertFalse(testCat.isHungry());
+    }
+
+
+}
