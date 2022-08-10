@@ -1,0 +1,58 @@
+package shopAndGoods;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import javax.naming.OperationNotSupportedException;
+
+public class ShopTest {
+    private Goods good1;
+    private Goods good2;
+    private Shop shop;
+
+    @Before
+    public void setUp() throws OperationNotSupportedException {
+        shop = new Shop();
+        good1 = new Goods("water", "123");
+        good2 = new Goods("bear", "456");
+        shop.addGoods("Shelves1", good1);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_addGoodThrowIfNonExistShelves() throws OperationNotSupportedException {
+        shop.addGoods("sh4", good1);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_addGoodThrowIfNonNullShelves() throws OperationNotSupportedException {
+        shop.addGoods("Shelves1", good2);
+    }
+
+    @Test(expected = OperationNotSupportedException.class)
+    public void test_addExistingGood() throws OperationNotSupportedException {
+        shop.addGoods("Shelves2", good1);
+    }
+
+    @Test
+    public void test_addNonExistingGoodToEmptyExistingShelves() throws OperationNotSupportedException {
+        Assert.assertEquals("Goods: 456 is placed successfully!", shop.addGoods("Shelves2", good2));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_removeGoodFromNonExistingShelves() throws OperationNotSupportedException {
+        shop.removeGoods("sh4", good1);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_GoodsInThatShelfDoesNotExists() throws OperationNotSupportedException {
+        shop.removeGoods("Shelves1", good2);
+    }
+
+    @Test
+    public void removeExistingGoodFromExistingTakenShelves() {
+        Assert.assertEquals("Goods: 123 is removed successfully!", shop.removeGoods("Shelves1", good1));
+        Assert.assertNull(shop.getShelves().get("Shelves1"));
+    }
+
+}
