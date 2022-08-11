@@ -1,0 +1,58 @@
+package garage;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.List;
+
+public class GarageTests {
+    private Car car;
+    private Car car1;
+    private Car car2;
+    private Garage garage;
+
+    @Before
+    public void setUp(){
+        garage = new Garage();
+        car = new Car("Ford", 240, 120);
+        car1 = new Car("Nissan", 220, 140);
+        car2 = new Car("Opel", 180, 100);
+        garage.addCar(car);
+        garage.addCar(car1);
+        garage.addCar(car2);
+    }
+    @Test(expected = IllegalArgumentException.class)
+    public void test_AddCarThrowIfNull (){
+        garage.addCar(null);
+    }
+
+    @Test
+    public void test_GetCount (){
+        Assert.assertEquals(3, garage.getCount());
+    }
+
+    @Test
+    public void test_findAllCarsWithMaxSpeedAbove (){
+        List <Car> expected = garage.findAllCarsWithMaxSpeedAbove(190);
+        Assert.assertEquals(2, expected.size());
+    }
+
+    @Test
+    public void test_GetTheMostExpensiveCar (){
+        Car expected = garage.getTheMostExpensiveCar();
+        Assert.assertSame(car1, expected);
+    }
+
+    @Test
+    public void test_FindAllCarsByBrand (){
+        List <Car> expected = garage.findAllCarsByBrand("Opel");
+        Assert.assertEquals(1, expected.size());
+    }
+
+    @Test
+    public void test_GetCars(){
+        List <Car> expected = garage.getCars();
+        Assert.assertEquals(3, expected.size());
+    }
+}
