@@ -1,0 +1,54 @@
+package gifts;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+public class GiftFactoryTests {
+    private Gift gift1 = new Gift("doll", 3);
+    private Gift gift2 = new Gift("truck", 4);
+    private Gift gift3 = new Gift("candle", 1);
+    private GiftFactory giftFactory;
+
+    @Before
+    public void setUp(){
+        giftFactory = new GiftFactory();
+        giftFactory.createGift(gift1);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_createGiftThrowIsExist(){
+        Assert.assertEquals(1, giftFactory.getCount());
+        giftFactory.createGift(gift1);
+    }
+
+    @Test
+    public void test_createGift(){
+        Assert.assertEquals(1, giftFactory.getCount());
+        giftFactory.createGift(gift2);
+        Assert.assertEquals(2, giftFactory.getCount());
+    }
+
+    @Test
+    public void test_removeTrue(){
+        Assert.assertTrue(giftFactory.removeGift("doll"));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void test_removeFalse(){
+        Assert.assertFalse(giftFactory.removeGift(" "));
+    }
+
+    @Test
+    public void test_getPresentWithLeastMagic(){
+        giftFactory.createGift(gift2);
+        giftFactory.createGift(gift3);
+        Assert.assertSame(gift3, giftFactory.getPresentWithLeastMagic());
+    }
+
+    @Test
+    public void test_getPresent(){
+        Assert.assertSame(gift1, giftFactory.getPresent("doll"));
+    }
+
+}
